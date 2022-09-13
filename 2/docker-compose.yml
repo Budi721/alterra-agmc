@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql
+    container_name: database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - database
+  go-server:
+    container_name: go-server
+    build:
+      context: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - DB_URI=${DB_URI}
+      - DB_NAME=${DB_NAME}
+    networks:
+      - database
+networks:
+  database:
+    name: database_network
+    driver: bridge
