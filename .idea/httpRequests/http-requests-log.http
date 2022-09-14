@@ -1,0 +1,351 @@
+GET http://localhost:8080/v1/users
+Accept: application/json
+
+<> 2022-09-15T010503.400.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc4NTgsImp0aSI6IjEifQ.ha3DyIAjDF5nNo-jtsxbqOVRXvTiq-icmbUoHjhhlfc
+
+<> 2022-09-15T010444.200.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc4NTgsImp0aSI6IjEifQ.ha3DyIAjDF5nNo-jtsxbqOVRXvTiq-icmbUoHjhhlfc
+
+<> 2022-09-15T010443.200.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T010418.200.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T010416.200.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc1MzYsImp0aSI6IjEifQ._m95FueFIQv0IeO3EUQb0K5mo1jGbXVRp0_MgWe_Msk"
+
+<> 2022-09-15T005934.400.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc1MzYsImp0aSI6IjEifQ._m95FueFIQv0IeO3EUQb0K5mo1jGbXVRp0_MgWe_Msk"
+
+<> 2022-09-15T005932.400.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc1MzYsImp0aSI6IjEifQ._m95FueFIQv0IeO3EUQb0K5mo1jGbXVRp0_MgWe_Msk
+
+<> 2022-09-15T005921.400.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc1MzYsImp0aSI6IjEifQ._m95FueFIQv0IeO3EUQb0K5mo1jGbXVRp0_MgWe_Msk
+
+<> 2022-09-15T005919.400.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T005856.200.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T005854.200.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc0NDMsImp0aSI6IjEifQ.iIRvhE5jyd2WguZ7eP2NuAbCBOtqHOEV5gJNVpgjTfs
+
+<> 2022-09-15T005834.400.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc0NDMsImp0aSI6IjEifQ.iIRvhE5jyd2WguZ7eP2NuAbCBOtqHOEV5gJNVpgjTfs
+
+<> 2022-09-15T005832.400.json
+
+###
+
+GET http://localhost:8080/v1/users
+Accept: application/json
+
+<> 2022-09-15T005743.400.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T005723.200.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T005717.200.json
+
+###
+
+POST http://localhost:8080/v1/users
+Content-Type: application/json
+
+{
+  "name": "Budi Rahmawan",
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T005705.201.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+<> 2022-09-15T005538.404.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "Budi Rahmawan"
+}
+
+<> 2022-09-15T005513.404.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "Budi Rahmawan"
+}
+
+<> 2022-09-15T005511.404.json
+
+###
+
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "rahmawanbd@gmail.com",
+  "password": "Budi Rahmawan",
+}
+
+<> 2022-09-15T005504.400.json
+
+###
+
+POST http://localhost:8080/v1/books
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Budi Pekerti",
+  "author": "Budi Rahmawan",
+  "price": 100000
+}
+
+<> 2022-09-15T005419.400.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T005409.404.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T005408.404.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005404.200.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005403.200.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005351.200.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T005145.400.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T005143.400.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T005142.400.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T005141.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005127.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005126.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005125.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005123.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T005119.400.json
+
+###
+
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+<> 2022-09-15T001553.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T001540.400.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-15T001231.200.json
+
+###
+
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+<> 2022-09-14T214820.200.json
+
+###
+
