@@ -2,6 +2,8 @@ package config
 
 import (
 	"fmt"
+
+	"github.com/Budi721/alterra-agmc/v2/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -9,30 +11,34 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-
 	config := map[string]string{
 		"DB_Username": "root",
-		"DB_Password": "123ABC4d.",
+		"DB_Password": "root",
 		"DB_Port":     "3306",
-		"DB_Host":     "127.0.0.1",
+		"DB_Host":     "database",
 		"DB_Name":     "training",
 	}
 
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		config["DB_Username"],
 		config["DB_Password"],
 		config["DB_Host"],
 		config["DB_Port"],
-		config["DB_Name"])
+		config["DB_Name"],
+	)
 
-	var e error
-	DB, e = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
-	if e != nil {
-		panic(e)
+	var err error
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		panic(err)
 	}
 	InitMigrate()
 }
 
 func InitMigrate() {
-	// DB.AutoMigrate(&models.Users{})
+	err := DB.AutoMigrate(&models.User{})
+	if err != nil {
+		return
+	}
 }

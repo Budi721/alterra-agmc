@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"errors"
 	"fmt"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 
@@ -12,18 +10,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func GetUsersController(c echo.Context) error {
-	users, err := database.GetUsers()
+func GetBooksController(c echo.Context) error {
+	books, err := database.GetBooks()
 
 	if err != nil {
-		switch {
-		case errors.Is(err, gorm.ErrRecordNotFound):
+		switch err.Error() {
+		case "not found":
 			return echo.NewHTTPError(
 				http.StatusNotFound,
 				models.Response{
 					Status: "not found",
 					Code:   http.StatusNotFound,
-					Data:   []models.User{},
+					Data:   []models.Book{},
 				},
 			)
 		default:
@@ -41,11 +39,11 @@ func GetUsersController(c echo.Context) error {
 	return c.JSON(http.StatusOK, models.Response{
 		Status: "success",
 		Code:   http.StatusOK,
-		Data:   users,
+		Data:   books,
 	})
 }
 
-func GetUserController(c echo.Context) error {
+func GetBookController(c echo.Context) error {
 	id := c.Param("id")
 
 	convertedId, err := strconv.Atoi(id)
@@ -59,10 +57,10 @@ func GetUserController(c echo.Context) error {
 			},
 		)
 	}
-	user, err := database.GetUser(uint(convertedId))
+	book, err := database.GetBook(uint(convertedId))
 	if err != nil {
-		switch {
-		case errors.Is(err, gorm.ErrRecordNotFound):
+		switch err.Error() {
+		case "not found":
 			return echo.NewHTTPError(
 				http.StatusNotFound,
 				models.Response{
@@ -86,14 +84,14 @@ func GetUserController(c echo.Context) error {
 	return c.JSON(http.StatusOK, models.Response{
 		Status: "success",
 		Code:   http.StatusOK,
-		Data:   user,
+		Data:   book,
 	})
 }
 
-func PostUserController(c echo.Context) error {
-	var user models.User
+func PostBookController(c echo.Context) error {
+	var book models.Book
 
-	if err := c.Bind(&user); err != nil {
+	if err := c.Bind(&book); err != nil {
 		return echo.NewHTTPError(
 			http.StatusBadRequest,
 			models.Response{
@@ -104,7 +102,7 @@ func PostUserController(c echo.Context) error {
 		)
 	}
 
-	created, err := database.CreateUser(user.Name, user.Email, user.Password)
+	created, err := database.CreateBook(book.ID, book.Title, book.Author, book.Price)
 	if err != nil {
 		return echo.NewHTTPError(
 			http.StatusInternalServerError,
@@ -123,8 +121,8 @@ func PostUserController(c echo.Context) error {
 	})
 }
 
-func PutUserController(c echo.Context) error {
-	var user models.User
+func PutBookController(c echo.Context) error {
+	var book models.Book
 	id := c.Param("id")
 	convertedId, err := strconv.Atoi(id)
 	if err != nil {
@@ -138,7 +136,7 @@ func PutUserController(c echo.Context) error {
 		)
 	}
 
-	if err := c.Bind(&user); err != nil {
+	if err := c.Bind(&book); err != nil {
 		return echo.NewHTTPError(
 			http.StatusBadRequest,
 			models.Response{
@@ -149,7 +147,7 @@ func PutUserController(c echo.Context) error {
 		)
 	}
 
-	created, err := database.UpdateUser(uint(convertedId), user.Name, user.Email, user.Password)
+	created, err := database.UpdateBook(uint(convertedId), book.Title, book.Author, book.Price)
 	if err != nil {
 		return echo.NewHTTPError(
 			http.StatusInternalServerError,
@@ -168,7 +166,7 @@ func PutUserController(c echo.Context) error {
 	})
 }
 
-func DeleteUserController(c echo.Context) error {
+func DeleteBookController(c echo.Context) error {
 	id := c.Param("id")
 	convertedId, err := strconv.Atoi(id)
 	if err != nil {
@@ -182,10 +180,10 @@ func DeleteUserController(c echo.Context) error {
 		)
 	}
 
-	user, err := database.DeleteUser(uint(convertedId))
+	book, err := database.DeleteBook(uint(convertedId))
 	if err != nil {
-		switch {
-		case errors.Is(err, gorm.ErrRecordNotFound):
+		switch err.Error() {
+		case "not found":
 			return echo.NewHTTPError(
 				http.StatusNotFound,
 				models.Response{
@@ -209,6 +207,6 @@ func DeleteUserController(c echo.Context) error {
 	return c.JSON(http.StatusOK, models.Response{
 		Status: "success",
 		Code:   http.StatusOK,
-		Data:   user,
+		Data:   book,
 	})
 }

@@ -7,10 +7,13 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3306:3306"
+      MYSQL_DATABASE: training
+    volumes:
+      - /data:/var/lib/mysql
     networks:
       - database
+    ports:
+      - "3306:3306"
   go-server:
     container_name: go-server
     build:
@@ -19,9 +22,6 @@ services:
       - "8080:8080"
     depends_on:
       - database
-    environment:
-      - DB_URI=${DB_URI}
-      - DB_NAME=${DB_NAME}
     networks:
       - database
 networks:
