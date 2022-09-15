@@ -3,7 +3,7 @@ POST http://localhost:8080/v1/login
 Content-Type: application/json
 
 {
-  "email": "rahmawanbd@gmail.com",
+  "email": "raharjobd@gmail.com",
   "password": "123456"
 }
 
@@ -63,15 +63,15 @@ POST http://localhost:8080/v1/users
 Content-Type: application/json
 
 {
-  "name": "Budi Rahmawan",
-  "email": "rahmawanbd@gmail.com",
+  "name": "Budi Raharjo",
+  "email": "raharjobd@gmail.com",
   "password": "123456"
 }
 
 ### DELETE request user
-DELETE http://localhost:8080/v1/users/2
+DELETE http://localhost:8080/v1/users/3
 Content-Type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Njk4MTEsImp0aSI6IjMifQ.mVh6Jix_9Y0PsDYZdzLdgxHd0xadROmaDtehqBhRPRE
 
 ### PUT request user with json body
 PUT http://localhost:8080/v1/users/2

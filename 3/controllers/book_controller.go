@@ -102,6 +102,11 @@ func PostBookController(c echo.Context) error {
 		)
 	}
 
+	// validator request middleware
+	if err := c.Validate(book); err != nil {
+		return err
+	}
+
 	created, err := database.CreateBook(book.ID, book.Title, book.Author, book.Price)
 	if err != nil {
 		return echo.NewHTTPError(
@@ -145,6 +150,11 @@ func PutBookController(c echo.Context) error {
 				Data:   nil,
 			},
 		)
+	}
+
+	// validator request middleware
+	if err := c.Validate(book); err != nil {
+		return err
 	}
 
 	created, err := database.UpdateBook(uint(convertedId), book.Title, book.Author, book.Price)

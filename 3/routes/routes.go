@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/Budi721/alterra-agmc/v2/controllers"
 	"github.com/Budi721/alterra-agmc/v2/middlewares"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -12,6 +13,7 @@ func New() *echo.Echo {
 	// Add middleware
 	e.Pre(middleware.RemoveTrailingSlash())
 	middlewares.LogMiddleware(e)
+	e.Validator = &middlewares.CustomValidator{Validator: validator.New()}
 	// Grouping route api version 1
 	v1 := e.Group("/v1")
 	v1.POST("/login", controllers.LoginUserController)

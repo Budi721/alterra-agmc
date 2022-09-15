@@ -1,12 +1,12 @@
 package middlewares
 
 import (
-	"github.com/labstack/echo/v4/middleware"
 	"strconv"
 	"time"
 
 	"github.com/Budi721/alterra-agmc/v2/constants"
 	"github.com/golang-jwt/jwt"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 // GenerateToken function to create new token

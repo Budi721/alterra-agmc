@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	"github.com/golang-jwt/jwt"
 	"gorm.io/gorm"
 	"net/http"
 	"strconv"
@@ -13,7 +14,7 @@ import (
 )
 
 func LoginUserController(c echo.Context) error {
-	user := models.User{}
+	user := models.UserLogin{}
 	err := c.Bind(&user)
 	if err != nil {
 		return echo.NewHTTPError(
@@ -24,6 +25,12 @@ func LoginUserController(c echo.Context) error {
 				Data:   nil,
 			},
 		)
+	}
+
+	// validator request middleware
+	err = c.Validate(user)
+	if err != nil {
+		return err
 	}
 
 	token, err := database.LoginUser(user.Email, user.Password)
@@ -144,11 +151,17 @@ func PostUserController(c echo.Context) error {
 		return echo.NewHTTPError(
 			http.StatusBadRequest,
 			models.Response{
-				Status: "bad request",
+				Status: "bad request: failed to bind request",
 				Code:   http.StatusBadRequest,
 				Data:   nil,
 			},
 		)
+	}
+
+	// validator request middleware
+	err := c.Validate(user)
+	if err != nil {
+		return err
 	}
 
 	created, err := database.CreateUser(user.Name, user.Email, user.Password)
@@ -171,7 +184,8 @@ func PostUserController(c echo.Context) error {
 }
 
 func PutUserController(c echo.Context) error {
-	var user models.User
+	// bind payload into model user
+	var user models.UserUpdate
 	id := c.Param("id")
 	convertedId, err := strconv.Atoi(id)
 	if err != nil {
@@ -180,6 +194,20 @@ func PutUserController(c echo.Context) error {
 			models.Response{
 				Status: "bad request",
 				Code:   http.StatusBadRequest,
+				Data:   nil,
+			},
+		)
+	}
+
+	// validasi apakah user sesuai dengan yang sedang login
+	token := c.Get("user").(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+	if jti, ok := claims["jti"]; ok && jti != id {
+		return echo.NewHTTPError(
+			http.StatusUnauthorized,
+			models.Response{
+				Status: "unauthorized",
+				Code:   http.StatusUnauthorized,
 				Data:   nil,
 			},
 		)
@@ -194,6 +222,12 @@ func PutUserController(c echo.Context) error {
 				Data:   nil,
 			},
 		)
+	}
+
+	// validator request middleware
+	err = c.Validate(user)
+	if err != nil {
+		return err
 	}
 
 	created, err := database.UpdateUser(uint(convertedId), user.Name, user.Email, user.Password)
@@ -224,6 +258,21 @@ func DeleteUserController(c echo.Context) error {
 			models.Response{
 				Status: "bad request",
 				Code:   http.StatusBadRequest,
+				Data:   nil,
+			},
+		)
+	}
+
+	// validasi apakah user sesuai dengan yang sedang login
+	token := c.Get("user").(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+
+	if jti, ok := claims["jti"]; ok && jti != id {
+		return echo.NewHTTPError(
+			http.StatusUnauthorized,
+			models.Response{
+				Status: "unauthorized",
+				Code:   http.StatusUnauthorized,
 				Data:   nil,
 			},
 		)
