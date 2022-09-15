@@ -1,0 +1,86 @@
+### POST request with json body
+POST http://localhost:8080/v1/login
+Content-Type: application/json
+
+{
+  "email": "raharjobd@gmail.com",
+  "password": "123456"
+}
+
+
+### GET request collection of book
+GET http://localhost:8080/v1/books
+Accept: application/json
+
+### GET request single of book
+GET http://localhost:8080/v1/books/3
+Accept: application/json
+
+### POST request with json body
+POST http://localhost:8080/v1/books
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Budi Pekerti",
+  "author": "Budi Rahmawan",
+  "price": 100000
+}
+
+### DELETE request
+DELETE http://localhost:8080/v1/books/1
+Content-Type: application/json
+
+
+### PUT request with json body
+PUT http://localhost:8080/v1/books/1
+Content-Type: application/json
+
+{
+  "title": "Budi Pekerti",
+  "author": "Budi Rahmawan",
+  "price": 100000
+}
+
+### ----------------------------------------------------------------------
+--------------------------------------------------------------------------
+
+### GET request collection of user with auth token
+GET http://localhost:8080/v1/users
+Accept: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Mzc4NTgsImp0aSI6IjEifQ.ha3DyIAjDF5nNo-jtsxbqOVRXvTiq-icmbUoHjhhlfc
+
+### GET request collection of user
+GET http://localhost:8080/v1/users
+Accept: application/json
+
+### GET request single of user
+GET http://localhost:8080/v1/users/2
+Accept: application/json
+
+### POST request with json user
+POST http://localhost:8080/v1/users
+Content-Type: application/json
+
+{
+  "name": "Budi Raharjo",
+  "email": "raharjobd@gmail.com",
+  "password": "123456"
+}
+
+### DELETE request user
+DELETE http://localhost:8080/v1/users/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjM0Njk4MTEsImp0aSI6IjMifQ.mVh6Jix_9Y0PsDYZdzLdgxHd0xadROmaDtehqBhRPRE
+
+### PUT request user with json body
+PUT http://localhost:8080/v1/users/2
+Content-Type: application/json
+
+{
+  "name": "Budi Raharjo",
+  "email": "rahmawanbd@gmail.com",
+  "password": "123456"
+}
+
+

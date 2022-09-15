@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql
+    container_name: database-test
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: training
+    volumes:
+      - /data:/var/lib/mysql
+    networks:
+      - database
+    ports:
+      - "3306:3306"
+  go-server:
+    container_name: go-server-test
+    build:
+      context: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_started
+    networks:
+      - database
+networks:
+  database:
+    name: database_network
+    driver: bridge
