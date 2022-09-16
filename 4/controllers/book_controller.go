@@ -121,7 +121,7 @@ func PostBookController(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, models.Response{
 		Status: "success",
-		Code:   http.StatusOK,
+		Code:   http.StatusCreated,
 		Data:   created,
 	})
 }

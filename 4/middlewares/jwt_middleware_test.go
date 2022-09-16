@@ -3,6 +3,7 @@ package middlewares
 import (
 	"github.com/Budi721/alterra-agmc/v2/constants"
 	"github.com/golang-jwt/jwt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -21,22 +22,18 @@ func TestGenerateToken(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := GenerateToken(tt.args.id)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("GenerateToken() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
 
-			token, err := jwt.Parse(got, func(token *jwt.Token) (interface{}, error) {
-				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-					t.Errorf("Unexpected signing method: %v", token.Header["alg"])
-				}
+			if assert.NoError(t, err) {
+				token, _ := jwt.Parse(got, func(token *jwt.Token) (interface{}, error) {
+					if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+						t.Errorf("Unexpected signing method: %v", token.Header["alg"])
+					}
 
-				return []byte(constants.SecretJwt), nil
-			})
+					return []byte(constants.SecretJwt), nil
+				})
 
-			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-				if claims["jti"] != tt.want {
-					t.Errorf("Unexpected signing method: %v", token.Header["alg"])
+				if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+					assert.Same(t, claims["jti"], tt.want)
 				}
 			}
 		})

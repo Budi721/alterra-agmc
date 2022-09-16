@@ -53,7 +53,7 @@ func UpdateBook(id uint, title string, author string, price uint) (models.Book, 
 				Price:  price,
 			}
 			// return book with same id
-			return book, nil
+			return mock.Books[id], nil
 		}
 	}
 
