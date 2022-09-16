@@ -20,6 +20,7 @@ services:
       context: ./
     ports:
       - "8080:8080"
+    restart: unless-stopped
     depends_on:
       database:
         condition: service_started
