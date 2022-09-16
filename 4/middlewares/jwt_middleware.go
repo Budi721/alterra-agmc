@@ -21,10 +21,10 @@ func GenerateToken(id uint) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Generate encoded token and send it as response.
-	return token.SignedString([]byte(constants.SECRET_JWT))
+	return token.SignedString([]byte(constants.SecretJwt))
 }
 
 // JWTMiddleware middleware to validate user to the response.
 var JWTMiddleware = middleware.JWTWithConfig(middleware.JWTConfig{
-	SigningKey: []byte(constants.SECRET_JWT),
+	SigningKey: []byte(constants.SecretJwt),
 })

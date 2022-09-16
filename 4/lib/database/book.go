@@ -62,10 +62,10 @@ func UpdateBook(id uint, title string, author string, price uint) (models.Book, 
 }
 
 func DeleteBook(id uint) (models.Book, error) {
-	for _, b := range mock.Books {
+	for i, b := range mock.Books {
 		if b.ID == id {
-			book := mock.Books[id-1]
-			mock.Books = append(mock.Books[:id-1], mock.Books[id:]...)
+			book := mock.Books[i]
+			mock.Books = append(mock.Books[:i], mock.Books[i+1:]...)
 			return book, nil
 		}
 	}

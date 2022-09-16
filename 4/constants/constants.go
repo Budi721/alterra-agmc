@@ -1,3 +1,7 @@
 package constants
 
-const SECRET_JWT = "Legal"
+const (
+	SecretJwt = "Legal"
+	Success   = "\u2713"
+	Failed    = "\u2717"
+)

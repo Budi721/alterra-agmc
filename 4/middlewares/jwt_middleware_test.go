@@ -31,7 +31,7 @@ func TestGenerateToken(t *testing.T) {
 					t.Errorf("Unexpected signing method: %v", token.Header["alg"])
 				}
 
-				return []byte(constants.SECRET_JWT), nil
+				return []byte(constants.SecretJwt), nil
 			})
 
 			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
