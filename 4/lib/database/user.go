@@ -7,7 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func LoginUser(email string, password string) (string, error) {
+// UserRepository to inject in service
+// I don't need to interface because single implementation
+// I make interface in unit test
+type UserRepository struct{}
+
+func (u *UserRepository) LoginUser(email string, password string) (string, error) {
 	var user models.User
 
 	if err := config.DB.Where("email = ? AND password = ?", email, password).First(&user).Error; err != nil {
@@ -21,7 +26,8 @@ func LoginUser(email string, password string) (string, error) {
 
 	return token, nil
 }
-func GetUsers() ([]models.User, error) {
+
+func (u *UserRepository) GetUsers() ([]models.User, error) {
 	var users []models.User
 
 	if err := config.DB.Find(&users).Error; err != nil {
@@ -34,7 +40,7 @@ func GetUsers() ([]models.User, error) {
 	return users, nil
 }
 
-func GetUser(id uint) (*models.User, error) {
+func (u *UserRepository) GetUser(id uint) (*models.User, error) {
 	var user models.User
 
 	if err := config.DB.First(&user, id).Error; err != nil {
@@ -43,7 +49,7 @@ func GetUser(id uint) (*models.User, error) {
 	return &user, nil
 }
 
-func CreateUser(name string, email string, password string) (*models.User, error) {
+func (u *UserRepository) CreateUser(name string, email string, password string) (*models.User, error) {
 	user := models.User{
 		Name:     name,
 		Email:    email,
@@ -57,7 +63,7 @@ func CreateUser(name string, email string, password string) (*models.User, error
 	return &user, nil
 }
 
-func UpdateUser(id uint, name string, email string, password string) (*models.User, error) {
+func (u *UserRepository) UpdateUser(id uint, name string, email string, password string) (*models.User, error) {
 	user := models.User{
 		ID: id,
 	}
@@ -76,7 +82,7 @@ func UpdateUser(id uint, name string, email string, password string) (*models.Us
 	return &user, nil
 }
 
-func DeleteUser(id uint) (*models.User, error) {
+func (u *UserRepository) DeleteUser(id uint) (*models.User, error) {
 	user := models.User{
 		ID: id,
 	}

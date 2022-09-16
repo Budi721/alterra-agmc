@@ -8,12 +8,31 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Budi721/alterra-agmc/v2/lib/database"
 	"github.com/Budi721/alterra-agmc/v2/models"
 	"github.com/labstack/echo/v4"
 )
 
-func LoginUserController(c echo.Context) error {
+// UserRepository Abstract type concrete decouple for unit testing
+type UserRepository interface {
+	LoginUser(email string, password string) (string, error)
+	GetUsers() ([]models.User, error)
+	GetUser(id uint) (*models.User, error)
+	CreateUser(name string, email string, password string) (*models.User, error)
+	UpdateUser(id uint, name string, email string, password string) (*models.User, error)
+	DeleteUser(id uint) (*models.User, error)
+}
+
+// UserController injected repository to access database layer
+type UserController struct {
+	repo UserRepository
+}
+
+// NewUserController factory to construct controller
+func NewUserController(repo UserRepository) *UserController {
+	return &UserController{repo: repo}
+}
+
+func (uc UserController) LoginUserController(c echo.Context) error {
 	user := models.UserLogin{}
 	err := c.Bind(&user)
 	if err != nil {
@@ -33,7 +52,7 @@ func LoginUserController(c echo.Context) error {
 		return err
 	}
 
-	token, err := database.LoginUser(user.Email, user.Password)
+	token, err := uc.repo.LoginUser(user.Email, user.Password)
 	if err != nil {
 		switch {
 		case errors.Is(err, gorm.ErrRecordNotFound):
@@ -66,8 +85,8 @@ func LoginUserController(c echo.Context) error {
 	})
 }
 
-func GetUsersController(c echo.Context) error {
-	users, err := database.GetUsers()
+func (uc UserController) GetUsersController(c echo.Context) error {
+	users, err := uc.repo.GetUsers()
 
 	if err != nil {
 		switch {
@@ -99,7 +118,7 @@ func GetUsersController(c echo.Context) error {
 	})
 }
 
-func GetUserController(c echo.Context) error {
+func (uc UserController) GetUserController(c echo.Context) error {
 	id := c.Param("id")
 
 	convertedId, err := strconv.Atoi(id)
@@ -113,7 +132,7 @@ func GetUserController(c echo.Context) error {
 			},
 		)
 	}
-	user, err := database.GetUser(uint(convertedId))
+	user, err := uc.repo.GetUser(uint(convertedId))
 	if err != nil {
 		switch {
 		case errors.Is(err, gorm.ErrRecordNotFound):
@@ -144,7 +163,7 @@ func GetUserController(c echo.Context) error {
 	})
 }
 
-func PostUserController(c echo.Context) error {
+func (uc UserController) PostUserController(c echo.Context) error {
 	var user models.User
 
 	if err := c.Bind(&user); err != nil {
@@ -164,7 +183,7 @@ func PostUserController(c echo.Context) error {
 		return err
 	}
 
-	created, err := database.CreateUser(user.Name, user.Email, user.Password)
+	created, err := uc.repo.CreateUser(user.Name, user.Email, user.Password)
 	if err != nil {
 		return echo.NewHTTPError(
 			http.StatusInternalServerError,
@@ -183,7 +202,7 @@ func PostUserController(c echo.Context) error {
 	})
 }
 
-func PutUserController(c echo.Context) error {
+func (uc UserController) PutUserController(c echo.Context) error {
 	// bind payload into model user
 	var user models.UserUpdate
 	id := c.Param("id")
@@ -230,7 +249,7 @@ func PutUserController(c echo.Context) error {
 		return err
 	}
 
-	created, err := database.UpdateUser(uint(convertedId), user.Name, user.Email, user.Password)
+	created, err := uc.repo.UpdateUser(uint(convertedId), user.Name, user.Email, user.Password)
 	if err != nil {
 		return echo.NewHTTPError(
 			http.StatusInternalServerError,
@@ -249,7 +268,7 @@ func PutUserController(c echo.Context) error {
 	})
 }
 
-func DeleteUserController(c echo.Context) error {
+func (uc UserController) DeleteUserController(c echo.Context) error {
 	id := c.Param("id")
 	convertedId, err := strconv.Atoi(id)
 	if err != nil {
@@ -278,7 +297,7 @@ func DeleteUserController(c echo.Context) error {
 		)
 	}
 
-	user, err := database.DeleteUser(uint(convertedId))
+	user, err := uc.repo.DeleteUser(uint(convertedId))
 	if err != nil {
 		switch {
 		case errors.Is(err, gorm.ErrRecordNotFound):
