@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  database:
+    image: postgres:15beta4-alpine3.16
+    container_name: database-deploy
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "${DB_PASS}"
+      POSTGRES_DB: "${DB_NAME}"
+    volumes:
+      - /data:/var/lib/mysql
+    networks:
+      - database
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+  api:
+    container_name: service-deploy
+    build:
+      dockerfile: docker/go/Dockerfile
+    environment:
+      DB_HOST: "${DB_HOST}"
+      DB_NAME: "${DB_NAME}"
+      DB_PASS: "${DB_PASS}"
+      DB_PORT: "${DB_PORT}"
+      DB_USER: "${DB_USER}"
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    restart: unless-stopped
+    links:
+      - database
+    networks:
+      - database
+networks:
+  database:
+    name: database_network
+    driver: bridge
+volumes:
+  db:
+    external: false
